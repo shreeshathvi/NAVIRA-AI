@@ -1,0 +1,40 @@
+
+# Python
+__pycache__/
+*.py[cod]
+venv/
+.venv/
+env/
+
+# Secrets
+.env
+.env.*
+!.env.example
+
+# IDE and OS
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Large datasets
+data/*.csv
+
+!data/US_Accidents_March23_sample.csv
+data/*.zip
+
+# Generated route-analysis results
+models/route_results/
+
+# Keep trained model files
+# random_forest.pkl, kmeans.pkl, scaler.pkl remain trackable
+
+
+# Jupyter temporary files
+.ipynb_checkpoints/
+
+# Generated HTML maps
+models/route_results/
+
+# Original large model and local backup
+models/random_forest.pkl
+backend/app_backup.py

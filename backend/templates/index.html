@@ -1,0 +1,3684 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>
+        NAVIRA AI — Intelligent Journey. Safer Decisions.
+    </title>
+
+    <!-- Leaflet -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            background:
+                radial-gradient(circle at top left,
+                    #102a43,
+                    transparent 35%),
+
+                radial-gradient(circle at bottom right,
+                    #063b2f,
+                    transparent 30%),
+
+                #050b12;
+
+            color: white;
+
+            min-height: 100vh;
+
+        }
+
+        .container {
+
+            width: 92%;
+
+            max-width: 1400px;
+
+            margin: auto;
+
+        }
+
+        /* =====================================================
+           HEADER
+        ===================================================== */
+
+        header {
+
+            padding: 22px 0;
+
+            border-bottom:
+                1px solid rgba(255, 255, 255, 0.08);
+
+            background:
+                rgba(3, 10, 17, 0.75);
+
+            backdrop-filter:
+                blur(12px);
+
+            position: sticky;
+
+            top: 0;
+
+            z-index: 1000;
+
+        }
+
+        .nav {
+
+            display: flex;
+
+            justify-content:
+                space-between;
+
+            align-items: center;
+
+        }
+
+        .brand {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+        }
+
+        .brand-icon {
+
+            width: 44px;
+
+            height: 44px;
+
+            border-radius: 12px;
+
+            background:
+                linear-gradient(135deg,
+                    #00ff9d,
+                    #00bfff);
+
+            color: #00140d;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-weight: 900;
+
+            font-size: 19px;
+
+        }
+
+        .brand-text h1 {
+
+            font-size: 22px;
+
+            letter-spacing: 2px;
+
+        }
+
+        .brand-text p {
+
+            font-size: 11px;
+
+            color: #8ea3b7;
+
+            margin-top: 3px;
+
+        }
+
+        .online {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            color: #00ff9d;
+
+            font-size: 12px;
+
+            font-weight: bold;
+
+        }
+
+        .online-dot {
+
+            width: 9px;
+
+            height: 9px;
+
+            border-radius: 50%;
+
+            background: #00ff9d;
+
+            box-shadow:
+                0 0 12px #00ff9d;
+
+        }
+
+        /* =====================================================
+           HERO
+        ===================================================== */
+
+        .hero {
+
+            text-align: center;
+
+            padding:
+                65px 20px 45px;
+
+        }
+
+        .hero h2 {
+
+            font-size:
+                clamp(38px,
+                    6vw,
+                    72px);
+
+            line-height: 1.05;
+
+            margin-bottom: 18px;
+
+            background:
+                linear-gradient(90deg,
+                    #ffffff,
+                    #00ff9d,
+                    #00bfff);
+
+            -webkit-background-clip: text;
+background-clip: text;
+
+            -webkit-text-fill-color:
+                transparent;
+
+        }
+
+        .hero p {
+
+            color: #91a4b7;
+
+            font-size: 17px;
+
+            max-width: 700px;
+
+            margin: auto;
+
+            line-height: 1.7;
+
+        }
+
+        /* =====================================================
+           GLASS
+        ===================================================== */
+
+        .glass {
+
+            background:
+                rgba(10,
+                    21,
+                    31,
+                    0.72);
+
+            border:
+                1px solid rgba(255,
+                    255,
+                    255,
+                    0.08);
+
+            border-radius: 20px;
+
+            box-shadow:
+                0 20px 60px rgba(0, 0, 0, 0.25);
+
+            backdrop-filter:
+                blur(15px);
+
+        }
+
+        /* =====================================================
+           PLANNER
+        ===================================================== */
+
+        .planner {
+
+            padding: 28px;
+
+            margin-bottom: 30px;
+
+        }
+
+        .section-title {
+
+            display: flex;
+
+            justify-content:
+                space-between;
+
+            align-items: center;
+
+            margin-bottom: 22px;
+
+        }
+
+        .section-title h3 {
+
+            font-size: 21px;
+
+        }
+
+        .section-title span {
+
+            color: #00ff9d;
+
+            font-size: 12px;
+
+            font-weight: bold;
+
+            letter-spacing: 1px;
+
+        }
+
+        .form-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            gap: 18px;
+
+        }
+
+        .field {
+
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 8px;
+
+        }
+
+        .field label {
+
+            font-size: 12px;
+
+            color: #8ea3b7;
+
+        }
+
+        .field input {
+
+            width: 100%;
+
+            padding: 14px 15px;
+
+            border-radius: 11px;
+
+            border:
+                1px solid rgba(255, 255, 255, 0.1);
+
+            background: #07111a;
+
+            color: white;
+
+            outline: none;
+
+        }
+
+        .field input:focus {
+
+            border-color:
+                #00ff9d;
+
+        }
+
+        .analyze-btn {
+
+            grid-column:
+                1 / -1;
+
+            padding: 16px;
+
+            border: none;
+
+            border-radius: 12px;
+
+            cursor: pointer;
+
+            background:
+                linear-gradient(90deg,
+                    #00ff9d,
+                    #00cfff);
+
+            color: #00130d;
+
+            font-weight: 900;
+
+            font-size: 15px;
+
+        }
+
+        .analyze-btn:disabled {
+
+            opacity: 0.5;
+
+            cursor:
+                not-allowed;
+
+        }
+
+        #status {
+
+            margin-top: 18px;
+
+            padding: 13px 16px;
+
+            border-radius: 10px;
+
+            background:
+                rgba(0,
+                    255,
+                    157,
+                    0.06);
+
+            border:
+                1px solid rgba(0,
+                    255,
+                    157,
+                    0.15);
+
+            color: #9cefc9;
+
+            font-size: 13px;
+
+            display: none;
+
+        }
+
+        /* =====================================================
+           MAP
+        ===================================================== */
+
+        #map {
+
+            width: 100%;
+
+            height: 520px;
+
+            border-radius: 20px;
+
+            overflow: hidden;
+
+            border:
+                1px solid rgba(255,
+                    255,
+                    255,
+                    0.08);
+
+            margin-bottom: 30px;
+
+        }
+
+        /* =====================================================
+           ROUTES
+        ===================================================== */
+
+        .routes-header {
+
+            display: flex;
+
+            justify-content:
+                space-between;
+
+            margin-bottom: 18px;
+
+        }
+
+        .routes-header h3 {
+
+            font-size: 22px;
+
+        }
+
+        .routes-header span {
+
+            color: #7f94a8;
+
+            font-size: 13px;
+
+        }
+
+        .routes-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 18px;
+
+            margin-bottom: 30px;
+
+        }
+
+        .route-card {
+
+            padding: 22px;
+
+            position: relative;
+
+            transition:
+                0.25s;
+
+        }
+
+        .route-card:hover {
+
+            transform:
+                translateY(-4px);
+
+        }
+
+        .route-card.recommended {
+
+            border:
+                1px solid rgba(0,
+                    255,
+                    157,
+                    0.65);
+
+            box-shadow:
+                0 0 35px rgba(0,
+                    255,
+                    157,
+                    0.08);
+
+        }
+
+        .badges {
+
+            display: flex;
+
+            gap: 7px;
+
+            margin-bottom: 15px;
+
+        }
+
+        .badge {
+
+            font-size: 9px;
+
+            font-weight: 900;
+
+            padding:
+                5px 8px;
+
+            border-radius: 5px;
+
+        }
+
+        .recommended-badge {
+
+            background:
+                #00ff9d;
+
+            color:
+                #00150d;
+
+        }
+
+        .fastest-badge {
+
+            background:
+                #00bfff;
+
+            color:
+                #00121a;
+
+        }
+
+        .route-title {
+
+            font-size: 18px;
+
+            margin-bottom: 18px;
+
+        }
+
+        .route-stat {
+
+            display: flex;
+
+            justify-content:
+                space-between;
+
+            padding: 9px 0;
+
+            border-bottom:
+                1px solid rgba(255,
+                    255,
+                    255,
+                    0.06);
+
+            font-size: 13px;
+
+        }
+
+        .route-stat span:first-child {
+
+            color:
+                #8196a9;
+
+        }
+
+        .risk-high {
+
+            color:
+                #ff6969;
+
+        }
+
+        .risk-medium {
+
+            color:
+                #ffc857;
+
+        }
+
+        .risk-low {
+
+            color:
+                #00ff9d;
+
+        }
+
+        /* =====================================================
+           SAFETY
+        ===================================================== */
+
+        .safety-section {
+
+            display: grid;
+
+            grid-template-columns:
+                1fr 1fr;
+
+            gap: 20px;
+
+            margin-bottom: 30px;
+
+        }
+
+        .safety-card {
+
+            padding: 28px;
+
+        }
+
+        .safety-main {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 25px;
+
+        }
+
+        .score-circle {
+
+            width: 135px;
+
+            height: 135px;
+
+            border-radius: 50%;
+
+            border:
+                8px solid #ff5757;
+
+            display: flex;
+
+            flex-direction: column;
+
+            align-items: center;
+
+            justify-content: center;
+
+            flex-shrink: 0;
+
+        }
+
+        .score-circle strong {
+
+            font-size: 38px;
+
+        }
+
+        .score-circle small {
+
+            color:
+                #91a4b7;
+
+            font-size: 10px;
+
+        }
+
+        .safety-info h3 {
+
+            font-size: 20px;
+
+            margin-bottom: 8px;
+
+        }
+
+        .safety-info p {
+
+            color:
+                #8196a9;
+
+            line-height: 1.6;
+
+            font-size: 13px;
+
+        }
+
+        .metrics {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            gap: 13px;
+
+        }
+
+        .metric {
+
+            padding: 16px;
+
+            background:
+                rgba(255,
+                    255,
+                    255,
+                    0.025);
+
+            border-radius: 12px;
+
+        }
+
+        .metric span {
+
+            display: block;
+
+            color:
+                #8196a9;
+
+            font-size: 11px;
+
+            margin-bottom: 7px;
+
+        }
+
+        .metric strong {
+
+            font-size: 20px;
+
+        }
+
+        /* =====================================================
+           RECOMMENDATION
+        ===================================================== */
+
+        .recommendation {
+
+            padding: 28px;
+
+            margin-bottom: 30px;
+
+            border:
+                1px solid rgba(0,
+                    255,
+                    157,
+                    0.22);
+
+        }
+
+        .recommendation h3 {
+
+            color:
+                #00ff9d;
+
+            font-size: 13px;
+
+            letter-spacing:
+                1.5px;
+
+            margin-bottom: 12px;
+
+        }
+
+        .recommendation h2 {
+
+            font-size: 28px;
+
+            margin-bottom: 8px;
+
+        }
+
+        .recommendation p {
+
+            color:
+                #91a4b7;
+
+            line-height: 1.6;
+
+            font-size: 14px;
+
+        }
+
+        /* =====================================================
+           COMPARISON
+        ===================================================== */
+
+        .comparison {
+
+            padding: 28px;
+
+            margin-bottom: 30px;
+
+        }
+
+        .comparison-row {
+
+            display: grid;
+
+            grid-template-columns:
+                120px 1fr 100px 100px;
+
+            align-items: center;
+
+            gap: 15px;
+
+            padding: 14px 0;
+
+            border-bottom:
+                1px solid rgba(255,
+                    255,
+                    255,
+                    0.06);
+
+            font-size: 13px;
+
+        }
+
+        .comparison-row.header {
+
+            color:
+                #71869a;
+
+            font-size: 11px;
+
+        }
+
+        .comparison-row.recommended-row {
+
+            color:
+                #00ff9d;
+
+        }
+
+        .bar {
+
+            height: 8px;
+
+            background:
+                #16232e;
+
+            border-radius:
+                20px;
+
+            overflow:
+                hidden;
+
+        }
+
+        .bar-fill {
+
+            height: 100%;
+
+            background:
+                linear-gradient(90deg,
+                    #00bfff,
+                    #00ff9d);
+
+        }
+
+        /* =====================================================
+           CHATBOT
+        ===================================================== */
+
+#chat-toggle {
+    position: fixed;
+    right: 25px;
+    bottom: 25px;
+    z-index: 2000;
+
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    padding: 14px 18px;
+    min-width: 265px;
+    border: 1px solid rgba(0, 255, 157, 0.4);
+    border-radius: 16px;
+
+    background: rgba(7, 17, 26, 0.97);
+    color: #ffffff;
+    text-align: left;
+    cursor: pointer;
+
+    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.45);
+    backdrop-filter: blur(15px);
+    transition: 0.25s ease;
+}
+
+#chat-toggle:hover {
+    transform: translateY(-3px);
+    border-color: #00ff9d;
+    box-shadow: 0 12px 35px rgba(0, 255, 157, 0.15);
+}
+
+.chat-toggle-status {
+    width: 11px;
+    height: 11px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background: #00ff9d;
+    box-shadow: 0 0 12px rgba(0, 255, 157, 0.7);
+}
+
+.chat-toggle-text {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    flex: 1;
+}
+
+.chat-toggle-text strong {
+    font-size: 14px;
+    letter-spacing: 0.3px;
+}
+
+.chat-toggle-text small {
+    font-size: 12px;
+    color: #91a4b7;
+}
+
+.chat-toggle-arrow {
+    color: #00ff9d;
+    font-size: 22px;
+    font-weight: bold;
+}
+
+#chatbot {
+    position: fixed;
+    right: 25px;
+    bottom: 100px;
+    width: 370px;
+    height: 520px;
+    max-height: calc(100vh - 125px);
+
+    background: #07111a;
+    border: 1px solid rgba(0, 255, 157, 0.25);
+    border-radius: 20px;
+
+    display: none;
+    flex-direction: column;
+    overflow: hidden;
+    z-index: 1999;
+
+    box-shadow: 0 20px 70px rgba(0, 0, 0, 0.55);
+}
+
+@media (max-width: 700px) {
+    #chat-toggle {
+        right: 12px;
+        bottom: 15px;
+        min-width: 245px;
+        padding: 12px 15px;
+    }
+
+    #chatbot {
+        right: 12px;
+        bottom: 85px;
+        width: calc(100% - 24px);
+        max-height: calc(100vh - 105px);
+    }
+}
+        .chat-header {
+
+            padding: 17px;
+
+            display: flex;
+
+            justify-content:
+                space-between;
+
+            align-items:
+                center;
+
+            background:
+                linear-gradient(90deg,
+                    rgba(0,
+                        255,
+                        157,
+                        0.12),
+                    rgba(0,
+                        191,
+                        255,
+                        0.08));
+
+            border-bottom:
+                1px solid rgba(255,
+                    255,
+                    255,
+                    0.08);
+
+        }
+
+        .chat-title strong {
+
+            display: block;
+
+            margin-bottom: 4px;
+
+        }
+
+        .chat-title span {
+
+            color:
+                #71869a;
+
+            font-size: 11px;
+
+        }
+
+        .chat-close {
+
+            border: none;
+
+            background:
+                transparent;
+
+            color:
+                #8ea3b7;
+
+            font-size: 20px;
+
+            cursor: pointer;
+
+        }
+
+        #chat-messages {
+
+            flex: 1;
+
+            overflow-y: auto;
+
+            padding: 15px;
+
+        }
+
+        .message {
+
+            margin-bottom: 12px;
+
+            padding:
+                10px 12px;
+
+            border-radius: 12px;
+
+            max-width: 88%;
+
+            font-size: 12px;
+
+            line-height: 1.55;
+
+        }
+
+        .bot-message {
+
+            background:
+                #101d28;
+
+            color:
+                #c9d5df;
+
+        }
+
+        .user-message {
+
+            margin-left: auto;
+
+            background:
+                rgba(0,
+                    255,
+                    157,
+                    0.12);
+
+            color:
+                #d9fff0;
+
+        }
+
+        .typing {
+
+            display: inline-flex;
+
+            gap: 4px;
+
+        }
+
+        .typing span {
+
+            width: 5px;
+
+            height: 5px;
+
+            border-radius: 50%;
+
+            background:
+                #00ff9d;
+
+            animation:
+                blink 1s infinite;
+
+        }
+
+        .typing span:nth-child(2) {
+
+            animation-delay:
+                0.2s;
+
+        }
+
+        .typing span:nth-child(3) {
+
+            animation-delay:
+                0.4s;
+
+        }
+
+        @keyframes blink {
+
+            0%,
+            100% {
+                opacity: 0.2;
+            }
+
+            50% {
+                opacity: 1;
+            }
+
+        }
+
+        .chat-input {
+
+            display: flex;
+
+            padding: 12px;
+
+            gap: 8px;
+
+            border-top:
+                1px solid rgba(255,
+                    255,
+                    255,
+                    0.08);
+
+        }
+
+        .chat-input input {
+
+            flex: 1;
+
+            background:
+                #0d1922;
+
+            color: white;
+
+            border:
+                1px solid rgba(255,
+                    255,
+                    255,
+                    0.1);
+
+            border-radius: 9px;
+
+            padding: 10px;
+
+            outline: none;
+
+        }
+
+        .chat-input button {
+
+            border: none;
+
+            border-radius: 9px;
+
+            padding:
+                0 15px;
+
+            background:
+                #00ff9d;
+
+            color:
+                #00130d;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+        }
+
+        /* =====================================================
+           FOOTER
+        ===================================================== */
+
+        footer {
+
+            text-align: center;
+
+            padding:
+                35px 20px;
+
+            color:
+                #617589;
+
+            font-size: 12px;
+
+            border-top:
+                1px solid rgba(255,
+                    255,
+                    255,
+                    0.06);
+
+        }
+
+        footer strong {
+
+            color:
+                #00ff9d;
+
+        }
+
+        /* =====================================================
+           RESPONSIVE
+        ===================================================== */
+
+        @media (max-width:1000px) {
+
+            .routes-grid {
+
+                grid-template-columns:
+                    1fr;
+
+            }
+
+            .safety-section {
+
+                grid-template-columns:
+                    1fr;
+
+            }
+
+        }
+
+        @media (max-width:700px) {
+
+            .form-grid {
+
+                grid-template-columns:
+                    1fr;
+
+            }
+
+            .analyze-btn {
+
+                grid-column:
+                    auto;
+
+            }
+
+            .safety-main {
+
+                flex-direction:
+                    column;
+
+                text-align:
+                    center;
+
+            }
+
+            .comparison-row {
+
+                grid-template-columns:
+                    80px 1fr 60px 65px;
+
+                font-size: 11px;
+
+            }
+
+            #chatbot {
+
+                right: 12px;
+
+                bottom: 85px;
+
+                width:
+                    calc(100% - 24px);
+
+            }
+
+            #chat-toggle {
+
+                right: 15px;
+
+                bottom: 15px;
+
+            }
+
+        }
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =========================================================
+     HEADER
+========================================================= -->
+
+    <header>
+
+        <div class="container nav">
+
+            <div class="brand">
+
+                <div class="brand-icon">
+                    N
+                </div>
+
+                <div class="brand-text">
+
+                    <h1>
+                        NAVIRA AI
+                    </h1>
+
+                    <p>
+                        Intelligent Journey. Safer Decisions.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="online">
+
+                <div class="online-dot"></div>
+
+                AI SYSTEM ONLINE
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <main class="container">
+
+
+        <!-- =========================================================
+     HERO
+========================================================= -->
+
+        <section class="hero">
+
+            <h2>
+                Travel smarter.<br>
+                Choose safer.
+            </h2>
+
+            <p>
+
+                NAVIRA AI combines route intelligence,
+                historical accident patterns and machine
+                learning to help identify safer and more
+                efficient journeys.
+
+            </p>
+
+        </section>
+
+
+        <!-- =========================================================
+     JOURNEY PLANNER
+========================================================= -->
+
+        <section class="planner glass">
+
+            <div class="section-title">
+
+                <h3>
+                    Journey Planner
+                </h3>
+
+                <span>
+                    AI ROUTE ANALYSIS
+                </span>
+
+            </div>
+
+
+            <form id="journey-form">
+
+                <div class="form-grid">
+
+
+                    <div class="field">
+
+                        <label>
+                            FROM
+                        </label>
+
+                        <input type="text" id="source" placeholder="Enter starting location" value="Los Angeles"
+                            required>
+
+                    </div>
+
+
+                    <div class="field">
+
+                        <label>
+                            TO
+                        </label>
+
+                        <input type="text" id="destination" placeholder="Enter destination" value="Ontario" required>
+
+                    </div>
+
+
+                    <div class="field">
+
+                        <label>
+                            DATE
+                        </label>
+
+                        <input type="date" id="date" required>
+
+                    </div>
+
+
+                    <div class="field">
+
+                        <label>
+                            TIME
+                        </label>
+
+                        <input type="time" id="time" required>
+
+                    </div>
+
+
+                    <button class="analyze-btn" type="submit" id="analyze-btn">
+                        ANALYZE JOURNEY
+                    </button>
+
+
+                </div>
+
+            </form>
+
+
+            <div id="status"></div>
+
+        </section>
+
+
+        <!-- =========================================================
+     MAP
+========================================================= -->
+
+        <section>
+
+            <div class="section-title">
+
+                <h3>
+                    Route Visualization
+                </h3>
+
+                <span>
+                    JOURNEY MAP
+                </span>
+
+            </div>
+
+
+            <div id="map"></div>
+
+        </section>
+
+
+        <!-- =========================================================
+     ROUTE INTELLIGENCE
+========================================================= -->
+
+        <section>
+
+            <div class="routes-header">
+
+                <h3>
+                    NAVIRA Route Intelligence
+                </h3>
+
+                <span id="route-count">
+                    0 routes found
+                </span>
+
+            </div>
+
+
+            <div class="routes-grid" id="routes-container"></div>
+
+        </section>
+
+
+        <!-- =========================================================
+     SAFETY
+========================================================= -->
+
+        <section class="safety-section">
+
+
+            <div class="safety-card glass">
+
+                <div class="section-title">
+
+                    <h3>
+                        Safety Intelligence
+                    </h3>
+
+                    <span>
+                        AI ANALYSIS
+                    </span>
+
+                </div>
+
+
+                <div class="safety-main">
+
+
+                    <div class="score-circle" id="score-circle">
+
+                        <strong id="safety-score">
+                            --
+                        </strong>
+
+                        <small>
+                            / 100
+                        </small>
+
+                    </div>
+
+
+                    <div class="safety-info">
+
+                        <h3 id="risk-level">
+                            Awaiting Analysis
+                        </h3>
+
+
+                        <p id="safety-description">
+
+                            Analyze a journey to generate
+                            NAVIRA safety intelligence.
+
+                        </p>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+            <div class="safety-card glass">
+
+                <div class="section-title">
+
+                    <h3>
+                        Risk Metrics
+                    </h3>
+
+                    <span>
+                        MODEL OUTPUT
+                    </span>
+
+                </div>
+
+
+                <div class="metrics">
+
+
+                    <div class="metric">
+
+                        <span>
+                            Historical Accident Risk
+                        </span>
+
+                        <strong id="historical-risk">
+                            --
+                        </strong>
+
+                    </div>
+
+
+                    <div class="metric">
+
+                        <span>
+                            ML Risk Score
+                        </span>
+
+                        <strong id="ml-risk">
+                            --
+                        </strong>
+
+                    </div>
+
+
+                    <div class="metric">
+
+                        <span>
+                            Route Efficiency
+                        </span>
+
+                        <strong id="route-efficiency">
+                            --
+                        </strong>
+
+                    </div>
+
+
+                    <div class="metric">
+
+                        <span>
+                            Accident Density
+                        </span>
+
+                        <strong id="accident-density">
+                            --
+                        </strong>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================================================
+     RECOMMENDATION
+========================================================= -->
+
+        <section class="recommendation glass">
+
+            <h3>
+                NAVIRA RECOMMENDATION
+            </h3>
+
+
+            <h2 id="recommendation-title">
+                Analyze a journey
+            </h2>
+
+
+            <p id="recommendation-text">
+
+                NAVIRA will compare available routes
+                using safety and travel-time intelligence.
+
+            </p>
+
+        </section>
+
+
+        <!-- =========================================================
+     COMPARISON
+========================================================= -->
+
+        <section class="comparison glass">
+
+            <div class="section-title">
+
+                <h3>
+                    Route Safety Comparison
+                </h3>
+
+                <span>
+                    SAFETY SCORE
+                </span>
+
+            </div>
+
+
+            <div class="comparison-row header">
+
+                <div>
+                    ROUTE
+                </div>
+
+                <div>
+                    SAFETY
+                </div>
+
+                <div>
+                    RISK
+                </div>
+
+                <div>
+                    SCORE
+                </div>
+
+            </div>
+
+
+            <div id="comparison-container"></div>
+
+        </section>
+
+
+    </main>
+
+
+    <!-- =========================================================
+     CHAT BUTTON
+========================================================= -->
+
+    <button id="chat-toggle" onclick="toggleChat()">
+        <span class="chat-toggle-status"></span>
+        <span class="chat-toggle-text">
+            <strong>I'm NAVIRA AI</strong>
+            <small>How may I help you?</small>
+        </span>
+        <span class="chat-toggle-arrow">↑</span>
+    </button>
+
+
+    <!-- =========================================================
+     CHATBOT
+========================================================= -->
+
+    <div id="chatbot">
+
+
+        <div class="chat-header">
+
+            <div class="chat-title">
+
+                <strong>
+                    NAVIRA AI Assistant
+                </strong>
+
+                <span>
+                    Intelligent route assistant
+                </span>
+
+            </div>
+
+
+            <button class="chat-close" onclick="toggleChat()">
+                ×
+            </button>
+
+        </div>
+
+
+        <div id="chat-messages">
+
+
+            <div class="message bot-message">
+
+                Hello 👋 I'm NAVIRA AI.
+
+                <br><br>
+
+                I've analyzed your journey and can help
+                explain the route results.
+
+                <br><br>
+
+                You can ask:
+
+                <br>
+                • Which route is recommended?
+                <br>
+                • Why is it recommended?
+                <br>
+                • Which route is safest?
+                <br>
+                • Which route is fastest?
+                <br>
+                • What is the risk?
+                <br>
+                • What is the accident density?
+                <br>
+                • How does Random Forest work?
+
+            </div>
+
+
+        </div>
+
+
+        <div class="chat-input">
+
+            <input type="text" id="chat-input" placeholder="Ask NAVIRA..." onkeydown="handleChatKey(event)">
+
+
+            <button onclick="sendChat()">
+                Send
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <footer>
+
+        <strong>
+            NAVIRA AI
+        </strong>
+
+        © 2026 · Intelligent Journey. Safer Decisions.
+
+    </footer>
+
+
+    <!-- Leaflet -->
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+
+    <script>
+
+
+        /* ============================================================
+           GLOBAL VARIABLES
+        ============================================================ */
+
+        let map = null;
+
+        let routeLayers = [];
+
+        let latestResult = null;
+
+
+        /* ============================================================
+           DATE/TIME
+        ============================================================ */
+
+        function setDefaultDateTime() {
+
+            const now = new Date();
+
+            const year =
+                now.getFullYear();
+
+            const month =
+                String(
+                    now.getMonth() + 1
+                ).padStart(2, "0");
+
+            const day =
+                String(
+                    now.getDate()
+                ).padStart(2, "0");
+
+            document.getElementById(
+                "date"
+            ).value =
+                `${year}-${month}-${day}`;
+
+            const hours =
+                String(
+                    now.getHours()
+                ).padStart(2, "0");
+
+            const minutes =
+                String(
+                    now.getMinutes()
+                ).padStart(2, "0");
+
+            document.getElementById(
+                "time"
+            ).value =
+                `${hours}:${minutes}`;
+
+        }
+
+
+        /* ============================================================
+           MAP
+        ============================================================ */
+
+        function initializeMap() {
+
+            map =
+                L.map("map").setView(
+                    [34.05, -117.65],
+                    10
+                );
+
+            L.tileLayer(
+                "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {
+                    attribution:
+                        "&copy; OpenStreetMap contributors"
+                }
+            ).addTo(map);
+
+            setTimeout(
+                function () {
+
+                    map.invalidateSize();
+
+                },
+                300
+            );
+
+        }
+
+
+        /* ============================================================
+           CLEAR MAP
+        ============================================================ */
+
+        function clearMap() {
+
+            routeLayers.forEach(
+                function (layer) {
+
+                    map.removeLayer(layer);
+
+                }
+            );
+
+            routeLayers = [];
+
+        }
+
+
+        /* ============================================================
+           NORMALIZE ROUTES
+        ============================================================ */
+
+        function normalizeRoutes(routes) {
+
+            return routes.map(
+                function (route, index) {
+
+                    route.route_number =
+                        index + 1;
+
+                    return route;
+
+                }
+            );
+
+        }
+
+
+        /* ============================================================
+           BEST ROUTE
+        ============================================================ */
+
+        function getBestRoute(routes) {
+
+            if (
+                !routes ||
+                routes.length === 0
+            ) {
+
+                return null;
+
+            }
+
+            return routes.reduce(
+                function (best, route) {
+
+                    return Number(
+                        route.final_score
+                    )
+                        >
+                        Number(
+                            best.final_score
+                        )
+                        ? route
+                        : best;
+
+                },
+                routes[0]
+            );
+
+        }
+
+
+        /* ============================================================
+           FASTEST ROUTE
+        ============================================================ */
+
+        function getFastestRoute(routes) {
+
+            if (
+                !routes ||
+                routes.length === 0
+            ) {
+
+                return null;
+
+            }
+
+            return routes.reduce(
+                function (fastest, route) {
+
+                    return Number(
+                        route.travel_time_min
+                    )
+                        <
+                        Number(
+                            fastest.travel_time_min
+                        )
+                        ? route
+                        : fastest;
+
+                },
+                routes[0]
+            );
+
+        }
+
+
+        /* ============================================================
+           DRAW MAP ROUTES
+        ============================================================ */
+
+        function drawRoutes(routes) {
+
+            clearMap();
+
+            const bestRoute =
+                getBestRoute(routes);
+
+            const allPoints = [];
+
+            routes.forEach(
+                function (route) {
+
+                    if (
+                        !route.coordinates ||
+                        route.coordinates.length === 0
+                    ) {
+
+                        return;
+
+                    }
+
+                    const isRecommended =
+                        route.route_number ===
+                        bestRoute.route_number;
+
+                    const latLngs =
+                        route.coordinates.map(
+                            function (point) {
+
+                                return [
+
+                                    Number(point[1]),
+
+                                    Number(point[0])
+
+                                ];
+
+                            }
+                        );
+
+                    latLngs.forEach(
+                        function (point) {
+
+                            allPoints.push(point);
+
+                        }
+                    );
+
+                    const line =
+                        L.polyline(
+                            latLngs,
+                            {
+
+                                color:
+                                    isRecommended
+                                        ? "#00ff9d"
+                                        : "#3388ff",
+
+                                weight:
+                                    isRecommended
+                                        ? 7
+                                        : 5,
+
+                                opacity:
+                                    isRecommended
+                                        ? 1
+                                        : 0.55
+
+                            }
+                        ).addTo(map);
+
+                    line.bindPopup(
+
+                        `
+
+                <b>
+                    Route ${route.route_number}
+                </b>
+
+                <br>
+
+                Safety:
+                ${Number(
+                            route.safety_score
+                        ).toFixed(2)}/100
+
+                <br>
+
+                Risk:
+                ${Number(
+                            route.risk_score
+                        ).toFixed(2)}/100
+
+                <br>
+
+                Final Score:
+                ${Number(
+                            route.final_score
+                        ).toFixed(2)}
+
+                `
+
+                    );
+
+                    routeLayers.push(line);
+
+                }
+            );
+
+            if (
+                allPoints.length > 0
+            ) {
+
+                map.fitBounds(
+                    L.latLngBounds(allPoints),
+                    {
+                        padding:
+                            [40, 40]
+                    }
+                );
+
+            }
+
+            setTimeout(
+                function () {
+
+                    map.invalidateSize();
+
+                },
+                200
+            );
+
+        }
+
+
+        /* ============================================================
+           ROUTE CARDS
+        ============================================================ */
+
+        function displayRoutes(routes) {
+
+            const container =
+                document.getElementById(
+                    "routes-container"
+                );
+
+            container.innerHTML = "";
+
+            const bestRoute =
+                getBestRoute(routes);
+
+            const fastestRoute =
+                getFastestRoute(routes);
+
+            routes.forEach(
+                function (route) {
+
+                    const isRecommended =
+                        route.route_number ===
+                        bestRoute.route_number;
+
+                    const isFastest =
+                        route.route_number ===
+                        fastestRoute.route_number;
+
+                    let riskClass =
+                        "risk-high";
+
+                    if (
+                        Number(route.risk_score) < 40
+                    ) {
+
+                        riskClass =
+                            "risk-low";
+
+                    }
+
+                    else if (
+                        Number(route.risk_score) < 70
+                    ) {
+
+                        riskClass =
+                            "risk-medium";
+
+                    }
+
+                    const card =
+                        document.createElement("div");
+
+                    card.className =
+                        "route-card glass";
+
+                    if (
+                        isRecommended
+                    ) {
+
+                        card.classList.add(
+                            "recommended"
+                        );
+
+                    }
+
+                    card.innerHTML = `
+
+                <div class="badges">
+
+                    ${isRecommended
+                            ?
+                            `
+                        <span class="badge recommended-badge">
+                            RECOMMENDED
+                        </span>
+                        `
+                            :
+                            ""
+                        }
+
+                    ${isFastest
+                            ?
+                            `
+                        <span class="badge fastest-badge">
+                            FASTEST
+                        </span>
+                        `
+                            :
+                            ""
+                        }
+
+                </div>
+
+
+                <div class="route-title">
+
+                    Route
+                    ${route.route_number}
+
+                </div>
+
+
+                <div class="route-stat">
+
+                    <span>
+                        Distance
+                    </span>
+
+                    <span>
+
+                        ${Number(
+                            route.distance_km
+                        ).toFixed(2)}
+
+                        km
+
+                    </span>
+
+                </div>
+
+
+                <div class="route-stat">
+
+                    <span>
+                        Travel Time
+                    </span>
+
+                    <span>
+
+                        ${Number(
+                            route.travel_time_min
+                        ).toFixed(2)}
+
+                        min
+
+                    </span>
+
+                </div>
+
+
+                <div class="route-stat">
+
+                    <span>
+                        Safety
+                    </span>
+
+                    <span class="risk-low">
+
+                        ${Number(
+                            route.safety_score
+                        ).toFixed(2)}
+
+                        /100
+
+                    </span>
+
+                </div>
+
+
+                <div class="route-stat">
+
+                    <span>
+                        Risk
+                    </span>
+
+                    <span class="${riskClass}">
+
+                        ${Number(
+                            route.risk_score
+                        ).toFixed(2)}
+
+                        /100
+
+                    </span>
+
+                </div>
+
+
+                <div class="route-stat">
+
+                    <span>
+                        Final Score
+                    </span>
+
+                    <span>
+
+                        ${Number(
+                            route.final_score
+                        ).toFixed(2)}
+
+                    </span>
+
+                </div>
+
+
+                <div class="route-stat">
+
+                    <span>
+                        Accident Density
+                    </span>
+
+                    <span>
+
+                        ${Number(
+                            route.accident_density
+                        ).toFixed(1)}
+
+                        /100 km
+
+                    </span>
+
+                </div>
+
+            `;
+
+                    container.appendChild(
+                        card
+                    );
+
+                }
+            );
+
+            displayRecommendation(
+                bestRoute
+            );
+
+        }
+
+
+        /* ============================================================
+           RECOMMENDATION
+        ============================================================ */
+
+        function displayRecommendation(
+            bestRoute
+        ) {
+
+            if (!bestRoute) {
+
+                return;
+
+            }
+
+            document.getElementById(
+                "recommendation-title"
+            ).textContent =
+
+                `Route ${bestRoute.route_number} is recommended`;
+
+            document.getElementById(
+                "recommendation-text"
+            ).innerHTML =
+
+                `
+
+        NAVIRA selected Route
+
+        <strong style="color:#00ff9d;">
+
+            ${bestRoute.route_number}
+
+        </strong>
+
+        because it achieved the highest overall
+        score of
+
+        <strong style="color:#00ff9d;">
+
+            ${Number(
+                    bestRoute.final_score
+                ).toFixed(2)}/100
+
+        </strong>.
+
+        It provides a safety score of
+
+        <strong>
+
+            ${Number(
+                    bestRoute.safety_score
+                ).toFixed(2)}/100
+
+        </strong>
+
+        while maintaining a travel time of
+
+        <strong>
+
+            ${Number(
+                    bestRoute.travel_time_min
+                ).toFixed(2)}
+
+            minutes
+
+        </strong>.
+
+        `;
+
+        }
+
+
+        /* ============================================================
+           SAFETY INTELLIGENCE
+        ============================================================ */
+
+        function displaySafety(
+            bestRoute
+        ) {
+
+            if (!bestRoute) {
+
+                return;
+
+            }
+
+            const safety =
+                Number(
+                    bestRoute.safety_score
+                );
+
+            document.getElementById(
+                "safety-score"
+            ).textContent =
+                safety.toFixed(0);
+
+            document.getElementById(
+                "historical-risk"
+            ).textContent =
+                Number(
+                    bestRoute.historical_risk
+                ).toFixed(0);
+
+            document.getElementById(
+                "ml-risk"
+            ).textContent =
+                Number(
+                    bestRoute.rf_risk
+                ).toFixed(0);
+
+            document.getElementById(
+                "accident-density"
+            ).textContent =
+                Number(
+                    bestRoute.accident_density
+                ).toFixed(1);
+
+            document.getElementById(
+                "route-efficiency"
+            ).textContent =
+                Number(
+                    bestRoute.time_score
+                ).toFixed(2);
+
+            const riskLevel =
+                document.getElementById(
+                    "risk-level"
+                );
+
+            const description =
+                document.getElementById(
+                    "safety-description"
+                );
+
+            if (safety < 40) {
+
+                riskLevel.textContent =
+                    "HIGH RISK";
+
+                riskLevel.className =
+                    "risk-high";
+
+                description.textContent =
+
+                    `Route ${bestRoute.route_number}
+            is currently classified as high risk.
+            NAVIRA's historical accident analysis
+            and machine learning severity prediction
+            indicate increased safety concerns.`;
+
+            }
+
+            else if (safety < 70) {
+
+                riskLevel.textContent =
+                    "MEDIUM RISK";
+
+                riskLevel.className =
+                    "risk-medium";
+
+                description.textContent =
+
+                    `Route ${bestRoute.route_number}
+            has a moderate safety level based on
+            historical accident patterns and the
+            machine learning severity prediction.`;
+
+            }
+
+            else {
+
+                riskLevel.textContent =
+                    "LOW RISK";
+
+                riskLevel.className =
+                    "risk-low";
+
+                description.textContent =
+
+                    `Route ${bestRoute.route_number}
+            has a relatively strong safety score
+            according to NAVIRA's current analysis.`;
+
+            }
+
+            const circle =
+                document.getElementById(
+                    "score-circle"
+                );
+
+            if (safety < 40) {
+
+                circle.style.borderColor =
+                    "#ff5757";
+
+            }
+
+            else if (safety < 70) {
+
+                circle.style.borderColor =
+                    "#ffc857";
+
+            }
+
+            else {
+
+                circle.style.borderColor =
+                    "#00ff9d";
+
+            }
+
+        }
+
+
+        /* ============================================================
+           COMPARISON
+           FIXED:
+           Shows numeric SAFETY value beside the safety bar.
+        ============================================================ */
+
+        function displayComparison(routes) {
+
+            const container =
+                document.getElementById(
+                    "comparison-container"
+                );
+
+            container.innerHTML = "";
+
+            const bestRoute =
+                getBestRoute(routes);
+
+            routes.forEach(
+                function (route) {
+
+                    const row =
+                        document.createElement("div");
+
+                    row.className =
+                        "comparison-row";
+
+                    if (
+                        route.route_number ===
+                        bestRoute.route_number
+                    ) {
+
+                        row.classList.add(
+                            "recommended-row"
+                        );
+
+                    }
+
+                    const safety =
+                        Number(
+                            route.safety_score
+                        );
+
+                    const risk =
+                        Number(
+                            route.risk_score
+                        );
+
+                    const score =
+                        Number(
+                            route.final_score
+                        );
+
+                    row.innerHTML = `
+
+                <div>
+                    Route ${route.route_number}
+                </div>
+
+
+                <div style="
+                    display:flex;
+                    align-items:center;
+                    gap:10px;
+                ">
+
+                    <div
+                        class="bar"
+                        style="flex:1;"
+                    >
+
+                        <div
+                            class="bar-fill"
+                            style="
+                                width:${Math.max(
+                        0,
+                        Math.min(
+                            100,
+                            safety
+                        )
+                    )}%;
+                            "
+                        ></div>
+
+                    </div>
+
+
+                    <span>
+                        ${safety.toFixed(0)}
+                    </span>
+
+                </div>
+
+
+                <div>
+                    ${risk.toFixed(0)}
+                </div>
+
+
+                <div>
+                    ${score.toFixed(2)}
+                </div>
+
+            `;
+
+                    container.appendChild(
+                        row
+                    );
+
+                }
+            );
+
+        }
+
+
+        /* ============================================================
+           ANALYZE
+        ============================================================ */
+
+        document
+            .getElementById(
+                "journey-form"
+            )
+            .addEventListener(
+                "submit",
+                async function (event) {
+
+                    event.preventDefault();
+
+                    const button =
+                        document.getElementById(
+                            "analyze-btn"
+                        );
+
+                    const status =
+                        document.getElementById(
+                            "status"
+                        );
+
+                    const source =
+                        document.getElementById(
+                            "source"
+                        ).value;
+
+                    const destination =
+                        document.getElementById(
+                            "destination"
+                        ).value;
+
+                    const date =
+                        document.getElementById(
+                            "date"
+                        ).value;
+
+                    const time =
+                        document.getElementById(
+                            "time"
+                        ).value;
+
+                    button.disabled =
+                        true;
+
+                    button.textContent =
+                        "ANALYZING JOURNEY...";
+
+                    status.style.display =
+                        "block";
+
+                    status.style.color =
+                        "#9cefc9";
+
+                    status.textContent =
+                        "NAVIRA AI is analyzing routes, accident patterns and machine learning risk...";
+
+                    try {
+
+                        const response =
+                            await fetch(
+                                "/analyze",
+                                {
+
+                                    method:
+                                        "POST",
+
+                                    headers:
+                                    {
+                                        "Content-Type":
+                                            "application/json"
+                                    },
+
+                                    body:
+                                        JSON.stringify({
+
+                                            source:
+                                                source,
+
+                                            destination:
+                                                destination,
+
+                                            date:
+                                                date,
+
+                                            time:
+                                                time
+
+                                        })
+
+                                }
+                            );
+
+                        const result =
+                            await response.json();
+
+                        if (!response.ok) {
+
+                            throw new Error(
+                                result.error ||
+                                "Analysis failed"
+                            );
+
+                        }
+
+                        latestResult =
+                            result;
+
+                        let routes =
+                            result.routes || [];
+
+                        if (
+                            routes.length === 0
+                        ) {
+
+                            throw new Error(
+                                "No routes returned."
+                            );
+
+                        }
+
+                        routes =
+                            normalizeRoutes(
+                                routes
+                            );
+
+                        latestResult.routes =
+                            routes;
+
+                        const bestRoute =
+                            getBestRoute(
+                                routes
+                            );
+
+                        document.getElementById(
+                            "route-count"
+                        ).textContent =
+                            `${routes.length} routes found`;
+
+                        drawRoutes(
+                            routes
+                        );
+
+                        displayRoutes(
+                            routes
+                        );
+
+                        displaySafety(
+                            bestRoute
+                        );
+
+                        displayComparison(
+                            routes
+                        );
+
+                        status.textContent =
+                            "NAVIRA route analysis completed successfully.";
+
+                    }
+
+                    catch (error) {
+
+                        console.error(
+                            error
+                        );
+
+                        status.textContent =
+                            "Error: " +
+                            error.message;
+
+                        status.style.color =
+                            "#ff7777";
+
+                    }
+
+                    finally {
+
+                        button.disabled =
+                            false;
+
+                        button.textContent =
+                            "ANALYZE JOURNEY";
+
+                    }
+
+                }
+            );
+
+
+        /* ============================================================
+           CHATBOT OPEN/CLOSE
+        ============================================================ */
+
+        function toggleChat() {
+
+            const chatbot =
+                document.getElementById(
+                    "chatbot"
+                );
+
+            if (
+                chatbot.style.display ===
+                "flex"
+            ) {
+
+                chatbot.style.display =
+                    "none";
+
+            }
+
+            else {
+
+                chatbot.style.display =
+                    "flex";
+
+                setTimeout(
+                    function () {
+
+                        document.getElementById(
+                            "chat-input"
+                        ).focus();
+
+                    },
+                    100
+                );
+
+            }
+
+        }
+
+
+        /* ============================================================
+           CHAT MESSAGE
+        ============================================================ */
+
+        function addChatMessage(
+            message,
+            isUser = false
+        ) {
+
+            const container =
+                document.getElementById(
+                    "chat-messages"
+                );
+
+            const messageDiv =
+                document.createElement(
+                    "div"
+                );
+
+            messageDiv.className =
+                "message " +
+                (
+                    isUser
+                        ? "user-message"
+                        : "bot-message"
+                );
+
+            messageDiv.innerHTML =
+                message;
+
+            container.appendChild(
+                messageDiv
+            );
+
+            container.scrollTop =
+                container.scrollHeight;
+
+        }
+
+
+        /* ============================================================
+           TYPING INDICATOR
+        ============================================================ */
+
+        function showTyping() {
+
+            const container =
+                document.getElementById(
+                    "chat-messages"
+                );
+
+            const typing =
+                document.createElement(
+                    "div"
+                );
+
+            typing.className =
+                "message bot-message";
+
+            typing.id =
+                "typing-message";
+
+            typing.innerHTML =
+
+                `
+
+        <div class="typing">
+
+            <span></span>
+
+            <span></span>
+
+            <span></span>
+
+        </div>
+
+        `;
+
+            container.appendChild(
+                typing
+            );
+
+            container.scrollTop =
+                container.scrollHeight;
+
+        }
+
+
+        function removeTyping() {
+
+            const typing =
+                document.getElementById(
+                    "typing-message"
+                );
+
+            if (typing) {
+
+                typing.remove();
+
+            }
+
+        }
+
+
+        /* ============================================================
+           CHAT ENTER
+        ============================================================ */
+
+        function handleChatKey(
+            event
+        ) {
+
+            if (
+                event.key ===
+                "Enter"
+            ) {
+
+                sendChat();
+
+            }
+
+        }
+
+
+        /* ============================================================
+           CHATBOT LOGIC
+        ============================================================ */
+
+        function sendChat() {
+
+            const input =
+                document.getElementById(
+                    "chat-input"
+                );
+
+            const question =
+                input.value.trim();
+
+            if (!question) {
+
+                return;
+
+            }
+
+            addChatMessage(
+                question,
+                true
+            );
+
+            input.value = "";
+
+            showTyping();
+
+            setTimeout(
+                function () {
+
+                    removeTyping();
+
+                    if (!latestResult) {
+
+                        addChatMessage(
+
+                            `
+
+                    Please analyze a journey first.
+
+                    Once NAVIRA completes the analysis,
+                    I can explain the routes, safety,
+                    risk and recommendation.
+
+                    `
+
+                        );
+
+                        return;
+
+                    }
+
+                    const routes =
+                        latestResult.routes || [];
+
+                    const bestRoute =
+                        getBestRoute(
+                            routes
+                        );
+
+                    const fastestRoute =
+                        getFastestRoute(
+                            routes
+                        );
+
+                    const q =
+                        question.toLowerCase();
+
+                    let answer = "";
+
+
+                    /* =================================================
+                       HELLO
+                    ================================================= */
+
+                    if (
+
+                        q.includes("hello") ||
+                        q.includes("hi") ||
+                        q.includes("hey")
+
+                    ) {
+
+                        answer =
+
+                            `
+
+                    Hello 👋
+
+                    I'm NAVIRA AI.
+
+                    I can explain your current route
+                    analysis, recommendation, safety,
+                    risk, travel time and ML prediction.
+
+                    `;
+
+                    }
+
+
+                    /* =================================================
+                       RECOMMENDATION
+                    ================================================= */
+
+                    else if (
+
+                        q.includes("recommend") ||
+                        q.includes("best route") ||
+                        q.includes("which route")
+
+                    ) {
+
+                        answer =
+
+                            `
+
+                    NAVIRA recommends
+
+                    <strong style="color:#00ff9d;">
+
+                        Route ${bestRoute.route_number}
+
+                    </strong>.
+
+                    It has the highest final score of
+
+                    <strong>
+
+                        ${Number(
+                                bestRoute.final_score
+                            ).toFixed(2)}/100
+
+                    </strong>.
+
+                    `;
+
+                    }
+
+
+                    /* =================================================
+                       WHY
+                    ================================================= */
+
+                    else if (
+                        q.includes("why")
+                    ) {
+
+                        answer =
+
+                            `
+
+                    Route
+                    <strong>
+                        ${bestRoute.route_number}
+                    </strong>
+
+                    is recommended because NAVIRA
+                    combines safety and travel efficiency.
+
+                    Safety score:
+
+                    <strong>
+                        ${Number(
+                                bestRoute.safety_score
+                            ).toFixed(2)}/100
+                    </strong>
+
+                    <br>
+
+                    Travel efficiency:
+
+                    <strong>
+                        ${Number(
+                                bestRoute.time_score
+                            ).toFixed(2)}/100
+                    </strong>
+
+                    <br>
+
+                    Overall score:
+
+                    <strong>
+                        ${Number(
+                                bestRoute.final_score
+                            ).toFixed(2)}/100
+                    </strong>
+
+                    `;
+
+                    }
+
+
+                    /* =================================================
+                       SAFETY
+                    ================================================= */
+
+                    else if (
+
+                        q.includes("safe") ||
+                        q.includes("safety")
+
+                    ) {
+
+                        answer =
+
+                            `
+
+                    Route
+                    <strong>
+                        ${bestRoute.route_number}
+                    </strong>
+
+                    has a safety score of
+
+                    <strong>
+                        ${Number(
+                                bestRoute.safety_score
+                            ).toFixed(2)}/100
+                    </strong>.
+
+                    Its risk score is
+
+                    <strong>
+                        ${Number(
+                                bestRoute.risk_score
+                            ).toFixed(2)}/100
+                    </strong>.
+
+                    `;
+
+                    }
+
+
+                    /* =================================================
+                       RISK
+                    ================================================= */
+
+                    else if (
+
+                        q.includes("risk") ||
+                        q.includes("danger")
+
+                    ) {
+
+                        answer =
+
+                            `
+
+                    The recommended Route
+
+                    <strong>
+                        ${bestRoute.route_number}
+                    </strong>
+
+                    has a risk score of
+
+                    <strong>
+                        ${Number(
+                                bestRoute.risk_score
+                            ).toFixed(2)}/100
+                    </strong>.
+
+                    NAVIRA combines historical accident
+                    patterns with the Random Forest
+                    severity prediction.
+
+                    `;
+
+                    }
+
+
+                    /* =================================================
+                       FASTEST
+                    ================================================= */
+
+                    else if (
+                        q.includes("fast")
+                    ) {
+
+                        answer =
+
+                            `
+
+                    The fastest route is
+
+                    <strong>
+                        Route ${fastestRoute.route_number}
+                    </strong>.
+
+                    Its estimated travel time is
+
+                    <strong>
+                        ${Number(
+                                fastestRoute.travel_time_min
+                            ).toFixed(2)}
+
+                        minutes
+                    </strong>.
+
+                    `;
+
+                    }
+
+
+                    /* =================================================
+                       TIME
+                    ================================================= */
+
+                    else if (
+                        q.includes("time")
+                    ) {
+
+                        answer =
+
+                            `
+
+                    The recommended Route
+
+                    <strong>
+                        ${bestRoute.route_number}
+                    </strong>
+
+                    takes approximately
+
+                    <strong>
+                        ${Number(
+                                bestRoute.travel_time_min
+                            ).toFixed(2)}
+
+                        minutes
+                    </strong>.
+
+                    `;
+
+                    }
+
+
+                    /* =================================================
+                       DISTANCE
+                    ================================================= */
+
+                    else if (
+                        q.includes("distance")
+                    ) {
+
+                        answer =
+
+                            `
+
+                    The recommended Route
+
+                    <strong>
+                        ${bestRoute.route_number}
+                    </strong>
+
+                    covers approximately
+
+                    <strong>
+                        ${Number(
+                                bestRoute.distance_km
+                            ).toFixed(2)}
+
+                        km
+                    </strong>.
+
+                    `;
+
+                    }
+
+
+                    /* =================================================
+                       ACCIDENT
+                    ================================================= */
+
+                    else if (
+
+                        q.includes("accident") ||
+                        q.includes("crash")
+
+                    ) {
+
+                        answer =
+
+                            `
+
+                    The recommended Route
+
+                    <strong>
+                        ${bestRoute.route_number}
+                    </strong>
+
+                    has an accident density of
+
+                    <strong>
+                        ${Number(
+                                bestRoute.accident_density
+                            ).toFixed(1)}
+
+                        per 100 km
+                    </strong>
+
+                    based on the historical accident
+                    dataset used by NAVIRA.
+
+                    `;
+
+                    }
+
+
+                    /* =================================================
+                       MACHINE LEARNING
+                    ================================================= */
+
+                    else if (
+
+                        q.includes("machine learning") ||
+                        q.includes("ml") ||
+                        q.includes("random forest")
+
+                    ) {
+
+                        answer =
+
+                            `
+
+                    NAVIRA uses a
+
+                    <strong>
+                        Random Forest
+                    </strong>
+
+                    model to predict accident severity.
+
+                    The current ML risk signal for the
+                    recommended Route
+
+                    <strong>
+                        ${bestRoute.route_number}
+                    </strong>
+
+                    is
+
+                    <strong>
+                        ${Number(
+                                bestRoute.rf_risk
+                            ).toFixed(2)}/100
+                    </strong>.
+
+                    `;
+
+                    }
+
+
+                    /* =================================================
+                       HOW IT WORKS
+                    ================================================= */
+
+                    else if (
+
+                        q.includes("how") &&
+                        q.includes("work")
+
+                    ) {
+
+                        answer =
+
+                            `
+
+                    NAVIRA uses three main signals:
+
+                    <br><br>
+
+                    <strong>
+                    1. Historical accident data
+                    </strong>
+
+                    <br>
+
+                    Finds accident patterns near
+                    the route.
+
+                    <br><br>
+
+                    <strong>
+                    2. Random Forest ML
+                    </strong>
+
+                    <br>
+
+                    Predicts accident severity.
+
+                    <br><br>
+
+                    <strong>
+                    3. Route efficiency
+                    </strong>
+
+                    <br>
+
+                    Compares travel time between
+                    alternative routes.
+
+                    <br><br>
+
+                    These signals are combined to
+                    produce the final route score.
+
+                    `;
+
+                    }
+
+
+                    /* =================================================
+                       DEFAULT
+                    ================================================= */
+
+                    else {
+
+                        answer =
+
+                            `
+
+                    I can help you with:
+
+                    <br><br>
+
+                    • Recommended route
+                    <br>
+                    • Why the route is recommended
+                    <br>
+                    • Safety score
+                    <br>
+                    • Risk score
+                    <br>
+                    • Fastest route
+                    <br>
+                    • Travel time
+                    <br>
+                    • Distance
+                    <br>
+                    • Accident density
+                    <br>
+                    • Random Forest ML
+                    <br>
+                    • How NAVIRA works
+
+                    `;
+
+                    }
+
+                    addChatMessage(
+                        answer
+                    );
+
+                },
+                500
+            );
+
+        }
+
+
+        /* ============================================================
+           START
+        ============================================================ */
+
+        window.addEventListener(
+            "load",
+            function () {
+
+                setDefaultDateTime();
+
+                initializeMap();
+
+            }
+        );
+
+    </script>
+
+</body>
+
+</html>
